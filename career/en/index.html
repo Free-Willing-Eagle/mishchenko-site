@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <title>Georgii Mishchenko</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0c12;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --text: #f0ede8;
+      --muted: rgba(240,237,232,0.5);
+      --card-hover: rgba(255,255,255,0.07);
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* Atmospheric background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(30,40,80,0.4) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* Language switcher */
+    .lang-switch {
+      align-self: flex-end;
+      margin-bottom: 32px;
+    }
+    .lang-switch a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.25s;
+    }
+    .lang-switch a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* Photo */
+    .photo-wrap {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold), var(--gold-light), var(--gold));
+      z-index: -1;
+      animation: spinSlow 8s linear infinite;
+    }
+    .photo-wrap img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 3px solid var(--bg);
+    }
+
+    /* Name & title */
+    .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-align: center;
+      animation: fadeDown 0.8s 0.1s ease both;
+      background: linear-gradient(135deg, var(--text) 60%, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .title-line {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 20px;
+      animation: fadeDown 0.8s 0.2s ease both;
+    }
+
+    /* Bio */
+    .bio {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--muted);
+      text-align: center;
+      max-width: 380px;
+      margin-bottom: 40px;
+      animation: fadeDown 0.8s 0.3s ease both;
+    }
+
+    /* Divider */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 36px;
+      animation: fadeDown 0.8s 0.35s ease both;
+    }
+
+    /* Links */
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .link-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .link-card:hover::before { opacity: 1; }
+
+    .link-card:nth-child(1) { animation: fadeUp 0.6s 0.4s ease both; }
+    .link-card:nth-child(2) { animation: fadeUp 0.6s 0.5s ease both; }
+    .link-card:nth-child(3) { animation: fadeUp 0.6s 0.6s ease both; }
+    .link-card:nth-child(4) { animation: fadeUp 0.6s 0.7s ease both; }
+    .link-card:nth-child(5) { animation: fadeUp 0.6s 0.8s ease both; }
+
+    .link-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .icon-linkedin { background: rgba(10,102,194,0.2); }
+    .icon-whatsapp { background: rgba(37,211,102,0.15); }
+    .icon-telegram { background: rgba(0,136,204,0.15); }
+    .icon-email    { background: rgba(201,168,76,0.12); }
+    .icon-cv       { background: rgba(255,255,255,0.06); }
+
+    .link-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .link-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .link-value {
+      font-size: 0.96rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .link-arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+    .link-card:hover .link-arrow {
+      transform: translateX(3px);
+      color: var(--gold);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 52px;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.2);
+      animation: fadeDown 0.8s 1s ease both;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="lang-switch">
+    <a href="../ru/">RU</a>
+  </div>
+
+  <div class="photo-wrap">
+    <img src="../photo.jpg" alt="Georgii Mishchenko" />
+  </div>
+
+  <h1 class="name">Georgii Mishchenko</h1>
+  <p class="title-line">Financial &amp; Risk Analyst &nbsp;·&nbsp; Dubai, UAE</p>
+
+  <p class="bio">
+    Specialist in financial modelling, real estate investment analysis and digital asset risk. 
+    MSc FinTech with Distinction &nbsp;·&nbsp; UAE Golden Visa holder &nbsp;·&nbsp; Open to new opportunities.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="links">
+
+    <a class="link-card" href="https://linkedin.com/in/georgii-mishchenko" target="_blank" rel="noopener">
+      <div class="link-icon icon-linkedin">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" stroke="#0a66c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="2" y="9" width="4" height="12" stroke="#0a66c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="4" cy="4" r="2" stroke="#0a66c2" stroke-width="1.8"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-label">LinkedIn</span>
+        <span class="link-value">georgii-mishchenko</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-card" href="https://wa.me/971564682366" target="_blank" rel="noopener">
+      <div class="link-icon icon-whatsapp">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="#25d366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-label">WhatsApp</span>
+        <span class="link-value">+971 56 468 2366</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-card" href="https://t.me/Georgii_Mishchenko" target="_blank" rel="noopener">
+      <div class="link-icon icon-telegram">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13" stroke="#0088cc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#0088cc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-label">Telegram</span>
+        <span class="link-value">@Georgii_Mishchenko</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-card" href="mailto:georgii@mishchenko.co.uk">
+      <div class="link-icon icon-email">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="22,6 12,13 2,6" stroke="#c9a84c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-label">Email</span>
+        <span class="link-value">georgii@mishchenko.co.uk</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-card" href="../CV_Georgii_Mishchenko.pdf" target="_blank" rel="noopener" download>
+      <div class="link-icon icon-cv">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#f0ede8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="14,2 14,8 20,8" stroke="#f0ede8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="12" y1="18" x2="12" y2="12" stroke="#f0ede8" stroke-width="1.8" stroke-linecap="round"/>
+          <polyline points="9,15 12,18 15,15" stroke="#f0ede8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <span class="link-label">CV / Résumé</span>
+        <span class="link-value">Download PDF</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <p class="footer">mishchenko.co.uk</p>
+</div>
+</body>
+</html>
