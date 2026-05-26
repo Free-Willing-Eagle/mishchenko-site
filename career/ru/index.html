@@ -218,9 +218,17 @@
     .icon-whatsapp { background: rgba(37,211,102,0.15); }
     .icon-telegram { background: rgba(0,136,204,0.15); }
     .icon-phone    { background: rgba(120,200,255,0.12); }
-    .icon-max      { background: rgba(0,108,255,0.15); }
+    .icon-max      { background: transparent; padding: 0; overflow: hidden; }
     .icon-email    { background: rgba(201,168,76,0.12); }
     .icon-cv       { background: rgba(255,255,255,0.06); }
+
+    .link-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
 
     .link-text {
       display: flex;
@@ -355,9 +363,7 @@
 
     <a class="link-card" href="https://max.ru/u/f9LHodD0cOIzgVMpaBCYPf7Pq9917LfjmdazuaY64GY5t5LzAiLeffA58Y8" target="_blank" rel="noopener">
       <div class="link-icon icon-max">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M4 18V6l4 6 4-6v12M16 18V6l3 4 3-4v12" stroke="#006cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="../../max-icon.png" alt="MAX" width="42" height="42" />
       </div>
       <div class="link-text">
         <span class="link-label">MAX</span>
